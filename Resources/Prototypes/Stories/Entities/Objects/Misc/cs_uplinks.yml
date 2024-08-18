@@ -1,0 +1,41 @@
+- type: entity
+  parent: [BaseItem, CSStorePresetUplinkT]
+  id: CSUplinkT
+  name: Аплинк T
+  components:
+  - type: Sprite
+    sprite: Stories/Objects/Devices/uplink-t.rsi
+    layers:
+    - state: icon
+  - type: Item
+    sprite: Stories/Objects/Devices/uplink-t.rsi
+  - type: UserInterface
+    interfaces:
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
+  - type: ActivatableUI
+    key: enum.StoreUiKey.Key
+  - type: Store
+    balance:
+      CSMarks: 800
+
+- type: entity
+  parent: [BaseItem, CSStorePresetUplinkCT]
+  id: CSUplinkCT
+  name: Аплинк CT
+  components:
+  - type: Sprite
+    sprite: Stories/Objects/Devices/uplink-ct.rsi
+    layers:
+    - state: icon
+  - type: Item
+    sprite: Stories/Objects/Devices/uplink-ct.rsi
+  - type: UserInterface
+    interfaces:
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
+  - type: ActivatableUI
+    key: enum.StoreUiKey.Key
+  - type: Store
+    balance:
+      CSMarks: 800

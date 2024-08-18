@@ -1,0 +1,223 @@
+# Основное CT
+
+- type: listing
+  id: CSCombatKnifeCT
+  name: ent-CombatKnife
+  description: ent-CombatKnife.desc
+  productEntity: CombatKnife
+  cost:
+    CSMarks: 0
+  categories:
+  - CSbaseCT
+
+- type: listing
+  id: CSClothingOuterArmorBasicCT
+  name: ent-ClothingOuterArmorBasic
+  description: ent-ClothingOuterArmorBasic.desc
+  productEntity: ClothingOuterArmorBasic
+  cost:
+    CSMarks: 600
+  categories:
+  - CSbaseCT
+
+- type: listing
+  id: CSClothingHeadHelmetSwatCT
+  name: ent-ClothingHeadHelmetSwat
+  description: ent-ClothingHeadHelmetSwat.desc
+  productEntity: ClothingHeadHelmetSwat
+  cost:
+    CSMarks: 400
+  categories:
+  - CSbaseCT
+
+- type: listing
+  id: CSClothingBeltUtilityCT
+  name: Пояс инструментов для дефуза бомбы
+  description: ent-ClothingBeltUtilityEngineering.desc
+  productEntity: ClothingBeltUtilityEngineering
+  cost:
+    CSMarks: 200
+  categories:
+  - CSbaseCT
+
+- type: listing
+  id: CSCombatMedipenCT
+  name: ent-CombatMedipen
+  description: ent-CombatMedipen.desc
+  productEntity: CombatMedipen
+  cost:
+    CSMarks: 600
+  categories:
+  - CSbaseCT
+
+# Пистолеты CT
+
+- type: listing
+  id: CSWeaponPistolMk58CT
+  name: ent-WeaponPistolMk58
+  description: ent-WeaponPistolMk58.desc
+  productEntity: WeaponPistolMk58
+  cost:
+    CSMarks: 200
+  categories:
+  - CSPistolsCT
+
+- type: listing
+  id: CSWeaponRevolverMatebaCT
+  name: ent-WeaponRevolverMateba
+  description: ent-WeaponRevolverMateba.desc
+  productEntity: WeaponRevolverMateba
+  cost:
+    CSMarks: 400
+  categories:
+  - CSPistolsCT
+
+- type: listing
+  id: CSWeaponPulsePistolCT
+  name: ent-WeaponPulsePistol
+  description: ent-WeaponPulsePistol.desc
+  productEntity: WeaponPulsePistol
+  cost:
+    CSMarks: 700
+  categories:
+  - CSPistolsCT
+
+# Винтовки CT
+
+- type: listing
+  id: CSWeaponRifleLecterCT
+  name: ent-WeaponRifleLecter
+  description: ent-WeaponRifleLecter.desc
+  productEntity: WeaponRifleLecter
+  cost:
+    CSMarks: 3000
+  categories:
+  - CSRiflesCT
+
+- type: listing
+  id: CSMusketCT
+  name: ent-Musket
+  description: ent-Musket.desc
+  productEntity: Musket
+  cost:
+    CSMarks: 4500
+  categories:
+  - CSRiflesCT
+
+- type: listing
+  id: CSWeaponSniperHristovCT
+  name: ent-WeaponSniperHristov
+  description: ent-WeaponSniperHristov.desc
+  productEntity: WeaponSniperHristov
+  cost:
+    CSMarks: 4700
+  categories:
+  - CSRiflesCT
+
+# ПП CT
+
+- type: listing
+  id: CSWeaponSubMachineGunDrozdCT
+  name: ent-WeaponSubMachineGunDrozd
+  description: ent-WeaponSubMachineGunDrozd.desc
+  productEntity: WeaponSubMachineGunDrozd
+  cost:
+   CSMarks: 2200
+  categories:
+   - CSSMGCT
+
+- type: listing
+  id: CSWeaponSubMachineGunWt550CT
+  name: ent-WeaponSubMachineGunWt550
+  description: ent-WeaponSubMachineGunWt550.desc
+  productEntity: WeaponSubMachineGunWt550
+  cost:
+    CSMarks: 1200
+  categories:
+  - CSSMGCT
+
+ # Пулеметы CT
+
+- type: listing
+  id: CSWeaponMinigunCT
+  name: ent-WeaponMinigun
+  description: ent-WeaponMinigun.desc
+  productEntity: WeaponMinigun
+  cost:
+    CSMarks: 6000
+  categories:
+  - CSMachinegunsCT
+
+# Дробовики CT
+
+- type: listing
+  id: CSWeaponShotgunKammererCT
+  name: ent-WeaponShotgunKammerer
+  description: ent-WeaponShotgunKammerer.desc
+  productEntity: WeaponShotgunKammerer
+  cost:
+    CSMarks: 2000
+  categories:
+  - CSShotgunsCT
+
+- type: listing
+  id: CSWeaponShotgunEnforcerCT
+  name: ent-WeaponShotgunEnforcer
+  description: ent-WeaponShotgunEnforcer.desc
+  productEntity: WeaponShotgunEnforcer
+  cost:
+    CSMarks: 2500
+  categories:
+  - CSShotgunsCT
+
+# Гранаты
+
+- type: listing
+  id: CSGrenadeShrapnelCT
+  name: ent-GrenadeShrapnel
+  description: ent-GrenadeShrapnel.desc
+  productEntity: GrenadeShrapnel
+  cost:
+    CSMarks: 30
+  categories:
+  - CSGrenadesCT
+
+- type: listing
+  id: CSGrenadeFlashBangCT
+  name: ent-GrenadeFlashBang
+  description: ent-GrenadeFlashBang.desc
+  productEntity: GrenadeFlashBang
+  cost:
+    CSMarks: 20
+  categories:
+  - CSGrenadesCT
+
+- type: listing
+  id: CSSmokeGrenadeCT
+  name: ent-SmokeGrenade
+  description: ent-SmokeGrenade.desc
+  productEntity: SmokeGrenade
+  cost:
+    CSMarks: 40
+  categories:
+  - CSGrenadesCT
+
+- type: listing
+  id: CSGrenadeDummyCT
+  name: ent-GrenadeDummy
+  description: ent-GrenadeDummy.desc
+  productEntity: GrenadeDummy
+  cost:
+    CSMarks: 10
+  categories:
+  - CSGrenadesCT
+
+- type: listing
+  id: CSGrenadeIncendiaryCT
+  name: ent-GrenadeIncendiary
+  description: ent-GrenadeIncendiary.desc
+  productEntity: GrenadeIncendiary
+  cost:
+    CSMarks: 40
+  categories:
+  - CSGrenadesCT

@@ -1,0 +1,55 @@
+- type: entity
+  parent: BaseItem
+  categories: [ HideSpawnMenu ]
+  id: CSMarks
+  name: Марка
+  components:
+  - type: Sprite
+    sprite: Stories/Objects/Misc/marki.rsi
+  - type: Item
+    sprite: Stories/Objects/Misc/marki.rsi
+    size: Tiny
+
+- type: entity
+  parent: CSMarks
+  id: CSMarks300
+  suffix: 300 M
+  components:
+    - type: Sprite
+      state: marki-300
+    - type: Currency
+      price:
+        CSMarks: 300
+
+- type: entity
+  parent: CSMarks
+  id: CSMarks800
+  suffix: 800 M
+  components:
+  - type: Sprite
+    state: marki-800
+  - type: Currency
+    price:
+      CSMarks: 800
+
+- type: entity
+  parent: CSMarks
+  id: CSMarks1500
+  suffix: 1500 M
+  components:
+  - type: Sprite
+    state: marki-1500
+  - type: Currency
+    price:
+      CSMarks: 1500
+
+- type: entity
+  parent: CSMarks
+  id: CSMarks3500
+  suffix: 3500 M
+  components:
+  - type: Sprite
+    state: marki-3500
+  - type: Currency
+    price:
+      CSMarks: 3500

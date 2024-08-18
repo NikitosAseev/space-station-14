@@ -1,0 +1,39 @@
+- type: entity
+  id: CSStorePresetUplinkT
+  abstract: true
+  components:
+  - type: Store
+    name: Аплинк Т
+    categories:
+    - CSbaseT
+    - CSPistolsT
+    - CSRiflesT
+    - CSSMGT
+    - CSMachinegunsT
+    - CSShotgunsT
+    - CSGrenadesT
+    - CSCartridgesT
+    currencyWhitelist:
+    - CSMarks
+    balance:
+      CSMarks: 0
+
+- type: entity
+  id: CSStorePresetUplinkCT
+  abstract: true
+  components:
+  - type: Store
+    name: Аплинк CТ
+    categories:
+    - CSbaseCT
+    - CSPistolsCT
+    - CSRiflesCT
+    - CSSMGCT
+    - CSMachinegunsCT
+    - CSShotgunsCT
+    - CSGrenadesCT
+    - CSCartridgesCT
+    currencyWhitelist:
+    - CSMarks
+    balance:
+      CSMarks: 0

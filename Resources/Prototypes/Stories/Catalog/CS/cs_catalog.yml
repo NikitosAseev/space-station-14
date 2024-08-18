@@ -1,0 +1,84 @@
+# T
+
+- type: storeCategory
+  id: CSbaseT
+  name: Основное
+  priority: 1
+
+- type: storeCategory
+  id: CSPistolsT
+  name: Пистолеты
+  priority: 2
+
+- type: storeCategory
+  id: CSRiflesT
+  name: Винтовки
+  priority: 3
+
+- type: storeCategory
+  id: CSSMGT
+  name: ПП
+  priority: 4
+
+- type: storeCategory
+  id: CSMachinegunsT
+  name: Пулеметы
+  priority: 5
+
+- type: storeCategory
+  id: CSShotgunsT
+  name: Дробовики
+  priority: 6
+
+- type: storeCategory
+  id: CSGrenadesT
+  name: Гранаты
+  priority: 7
+
+- type: storeCategory
+  id: CSCartridgesT
+  name: Патроны
+  priority: 8
+
+# KT
+
+- type: storeCategory
+  id: CSbaseCT
+  name: Основное
+  priority: 1
+
+- type: storeCategory
+  id: CSPistolsCT
+  name: Пистолеты
+  priority: 2
+
+- type: storeCategory
+  id: CSRiflesCT
+  name: Винтовки
+  priority: 3
+
+- type: storeCategory
+  id: CSSMGCT
+  name: ПП
+  priority: 4
+
+- type: storeCategory
+  id: CSMachinegunsCT
+  name: Пулеметы
+  priority: 5
+
+- type: storeCategory
+  id: CSShotgunsCT
+  name: Дробовики
+  priority: 6
+
+- type: storeCategory
+  id: CSGrenadesCT
+  name: Гранаты
+  priority: 7
+
+- type: storeCategory
+  id: CSCartridgesCT
+  name: Патроны
+  priority: 8
+
