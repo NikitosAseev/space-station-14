@@ -2,3 +2,8 @@
   id: SkillPoint
   displayName: store-currency-display-skill-point
   canWithdraw: false
+
+- type: currency
+  id: CSMarks
+  displayName: Марок
+  canWithdraw: false
