@@ -16,12 +16,12 @@
       briefing:
         text: vampire-role-greeting
         color: Plum
-        sound: "/Audio/DarkStation/DarkForces/Vampire/vampalert.ogg"
+        sound: "/Audio/_Den/Ambience/Antag/vampalert.ogg"
       components:
       - type: VampireThirstBlood
       - type: VampireDrinkBlood
 #      - type: ActionGrant
 #        actions:
-#          - ActionRetractableItemArmBlade # Temporary addition, will inevitably be a purchasable in the bio-store
+#          - Action
       mindRoles:
       - MindRoleVampire

@@ -70,11 +70,10 @@ public sealed partial class VampireThirstBloodComponent : Component
     /// The amount of states the thirst blood alert has.
     /// </summary>
     [DataField]
-    public int ThirstBloodLayerStates = 16;
+    public int ThirstBloodLayerStates = 9;
 
     [DataField]
     public ProtoId<AlertPrototype> ThirstBloodAlert = "ThirstBloodAlert";
-
 
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoNetworkedField, AutoPausedField]

@@ -1,63 +1,51 @@
 {
     "version": 1,
-    "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from cmss13 at https://github.com/cmss13-devs/cmss13/blob/09a5191fb11aab8ddffe3f9be94292b53e4d96f6/icons/mob/hud/alien_standard.dmi, 0 to 9 by EmoGarbage404",
+    "license": "CC-BY-NC-SA-4.0",
+    "copyright": "RPS-eXtended & by unotka, (discord:659107974253641791)",
     "size": {
         "x": 32,
         "y": 32
     },
     "states": [
         {
-            "name": "bio16"
+            "name": "vam0",
+            "delays": [ [ 0.25, 0.25, 0.25, 0.25, 0.25 ] ]
         },
         {
-            "name": "bio15"
+            "name": "vam1",
+            "delays": [ [ 0.25, 0.25, 0.25, 0.25, 0.25 ] ]
         },
         {
-            "name": "bio14"
+            "name": "vam2",
+            "delays": [ [ 0.25, 0.25, 0.25, 0.25, 0.25 ] ]
         },
         {
-            "name": "bio13"
+            "name": "vam3",
+            "delays": [ [ 0.25, 0.25, 0.25, 0.25, 0.25 ] ]
         },
         {
-            "name": "bio12"
+            "name": "vam4",
+            "delays": [ [ 0.25, 0.25, 0.25, 0.25, 0.25 ] ]
         },
         {
-            "name": "bio11"
+            "name": "vam5",
+            "delays": [ [ 0.25, 0.25, 0.25, 0.25, 0.25 ] ]
         },
         {
-            "name": "bio10"
+            "name": "vam6",
+            "delays": [ [ 0.25, 0.25, 0.25, 0.25, 0.25 ] ]
         },
         {
-            "name": "bio9"
+            "name": "vam7",
+            "delays": [ [ 0.25, 0.25, 0.25, 0.25, 0.25 ] ]
         },
         {
-            "name": "bio8"
+            "name": "vam8",
+            "delays": [ [ 0.25, 0.25, 0.25, 0.25, 0.25 ] ]
         },
         {
-            "name": "bio7"
-        },
-        {
-            "name": "bio6"
-        },
-        {
-            "name": "bio5"
-        },
-        {
-            "name": "bio4"
-        },
-        {
-            "name": "bio3"
-        },
-        {
-            "name": "bio2"
-        },
-        {
-            "name": "bio1"
-        },
-        {
-            "name": "bio0",
-            "delays": [ [ 0.2, 0.2 ] ]
+            "name": "vam9",
+            "delays": [ [ 0.25, 0.25, 0.25, 0.25, 0.25 ] ]
         },
         {
             "name": "0"

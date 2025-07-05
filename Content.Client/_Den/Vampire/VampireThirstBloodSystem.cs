@@ -23,7 +23,7 @@ public sealed class VampireThirstBloodSystem : EntitySystem
 
         var stateNumber = Math.Clamp((int)(component.CurrentThirstBlood / component.MaxThirstBlood * component.ThirstBloodLayerStates), 0, component.ThirstBloodLayerStates);
 
-        _sprite.LayerSetRsiState(args.SpriteViewEnt.AsNullable(), AlertVisualLayers.Base, $"bio{stateNumber}");
+        _sprite.LayerSetRsiState(args.SpriteViewEnt.AsNullable(), AlertVisualLayers.Base, $"vam{stateNumber}");
     }
 
     private void OnGetCounterAmount(Entity<VampireThirstBloodComponent> ent, ref GetGenericAlertCounterAmountEvent args)

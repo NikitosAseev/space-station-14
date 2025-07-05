@@ -1,11 +1,11 @@
-using Content.Server._Den.Components;
+using Content.Shared._Den.Vampire.Components;
 using Content.Shared._Den.Vampire.Events;
-using Content.Server.Body.Components;
+using Content.Shared.Body.Components;
 using Content.Shared.Actions;
 using Content.Shared.DoAfter;
 using Content.Shared.Popups;
 
-namespace Content.Server._Den.Vampire;
+namespace Content.Shared._Den.Vampire;
 
 /// <summary>
 /// </summary>
@@ -34,28 +34,17 @@ public sealed class VampireDrinkBloodSystem : EntitySystem
     private void OnFeedStart(Entity<VampireDrinkBloodComponent> ent, ref VampireDrinkBloodAbility args)
     {
         if (args.Handled)
-        {
-            Logger.Info($"OnFeedStart: Already handled for {ToPrettyString(ent)}");
             return;
-        }
 
         args.Handled = true;
 
         if (args.Target == args.Performer)
-        {
-            Logger.Info($"OnFeedStart: Performer tried to target self ({ToPrettyString(args.Performer)})");
             return;
-        }
 
         var target = args.Target;
 
-        Logger.Info($"OnFeedStart: Target {ToPrettyString(target)}");
-
         if (!HasComp<BloodstreamComponent>(target))
-        {
-            Logger.Info($"OnFeedStart: Target {ToPrettyString(target)} has no BloodstreamComponent");
             return;
-        }
 
         var drinkBloodDoAfter = new DoAfterArgs(EntityManager, ent, ent.Comp.DrinkBloodDuration, new VampireDrinkBloodAbilityDoAfter(),ent, target: target)
         {
@@ -65,14 +54,10 @@ public sealed class VampireDrinkBloodSystem : EntitySystem
         };
 
         if (!_doAfter.TryStartDoAfter(drinkBloodDoAfter))
-        {
-            Logger.Info($"OnFeedStart: Failed to start DoAfter for {ToPrettyString(ent)} -> {ToPrettyString(target)}");
             return;
-        }
 
         _popup.PopupEntity(Loc.GetString("vampire-feeding-on-vampire", ("target", target)), ent, ent, PopupType.Medium);
         _popup.PopupEntity(Loc.GetString("vampire-feeding-on-target", ("vampire", ent)), ent, target, PopupType.LargeCaution);
-        Logger.Info($"OnFeedStart: Started DoAfter for {ToPrettyString(ent)} -> {ToPrettyString(target)}");
     }
 
     private void OnFeedEnd(Entity<VampireDrinkBloodComponent> ent, ref VampireDrinkBloodAbilityDoAfter args)

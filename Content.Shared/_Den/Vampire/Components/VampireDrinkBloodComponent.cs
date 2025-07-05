@@ -1,8 +1,9 @@
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server._Den.Components;
+namespace Content.Shared._Den.Vampire.Components;
 
 
 [RegisterComponent, NetworkedComponent]
@@ -26,5 +27,5 @@ public sealed partial class VampireDrinkBloodComponent : Component
     };
 
     [DataField]
-        public float BloodDrainAmount = 20f;
+    public float BloodDrainAmount = 20;
 }

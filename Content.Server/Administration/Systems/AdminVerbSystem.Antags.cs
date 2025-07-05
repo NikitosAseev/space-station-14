@@ -12,6 +12,7 @@ using Content.Shared.Verbs;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Content.Server._Den.GameTicking.Rules.Components;
 
 namespace Content.Server.Administration.Systems;
 
@@ -41,6 +42,8 @@ public sealed partial class AdminVerbSystem
     private const string PirateGearId = "PirateGear";
 
     private readonly EntProtoId _paradoxCloneRuleId = "ParadoxCloneSpawn";
+
+    private EntProtoId<VampireRuleComponent> DefaultVampireRule = "Vampire";
 
     // All antag verbs have names so invokeverb works.
     private void AddAntagVerbs(GetVerbsEvent<Verb> args)
@@ -187,5 +190,17 @@ public sealed partial class AdminVerbSystem
 
         if (HasComp<HumanoidAppearanceComponent>(args.Target)) // only humanoids can be cloned
             args.Verbs.Add(paradox);
+
+        var vampireName = Loc.GetString("admin-verb-text-make-vampire");
+        Verb vampire = new()
+        {
+            Text = vampireName,
+            Category = VerbCategory.Antag,
+            Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/_Den/Interface/Misc/job_icons.rsi"), "vampire"),
+            Act = () => _antag.ForceMakeAntag<VampireRuleComponent>(player, DefaultVampireRule),
+            Impact = LogImpact.High,
+            Message = string.Join(": ", vampireName, Loc.GetString("admin-verb-make-vampire")),
+        };
+        args.Verbs.Add(vampire);
     }
 }
