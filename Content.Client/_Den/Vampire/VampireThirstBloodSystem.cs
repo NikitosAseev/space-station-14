@@ -21,7 +21,8 @@ public sealed class VampireThirstBloodSystem : EntitySystem
         if (args.Alert != component.ThirstBloodAlert)
             return;
 
-        var stateNumber = Math.Clamp((int)(component.CurrentThirstBlood / component.MaxThirstBlood * component.ThirstBloodLayerStates), 0, component.ThirstBloodLayerStates);
+        var ratio = Math.Clamp(component.CurrentThirstBlood / component.MaxThirstBlood, 0.0f, 1.0f);
+        var stateNumber = Math.Clamp((int)(ratio * component.ThirstBloodLayerStates), 0, component.ThirstBloodLayerStates - 1);
 
         _sprite.LayerSetRsiState(args.SpriteViewEnt.AsNullable(), AlertVisualLayers.Base, $"vam{stateNumber}");
     }

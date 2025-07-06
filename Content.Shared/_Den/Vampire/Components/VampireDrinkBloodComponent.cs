@@ -6,19 +6,20 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared._Den.Vampire.Components;
 
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(VampireDrinkBloodSystem))]
 public sealed partial class VampireDrinkBloodComponent : Component
 {
-    [DataField]
+    [DataField, AutoNetworkedField]
     public TimeSpan DrinkBloodDuration = TimeSpan.FromSeconds(2);
 
     [DataField]
     public EntProtoId ActionProto = "ActionVampireDrinkBlood";
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntityUid? Action;
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public List<ProtoId<ReagentPrototype>> BloodTarget = new()
     {
         "Blood",
@@ -26,6 +27,9 @@ public sealed partial class VampireDrinkBloodComponent : Component
         "InsectBlood"
     };
 
-    [DataField]
-    public float BloodDrainAmount = 20;
+    [DataField, AutoNetworkedField]
+    public FixedPoint2 BloodDrainAmountRemove = 20;
+
+    [DataField, AutoNetworkedField]
+    public float BloodDrainAmountGive = 20;
 }

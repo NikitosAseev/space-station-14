@@ -48,9 +48,6 @@ public sealed class VampireThirstBloodSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp))
             return;
 
-        if (_netMan.IsClient && !IsClientSide(ent))
-            return; // не помогло, реши
-
         ent.Comp.CurrentThirstBlood = Math.Clamp(ent.Comp.CurrentThirstBlood + value,
             ent.Comp.MinThirstBlood,
             ent.Comp.SoftCapMaximum ? Int32.MaxValue : ent.Comp.MaxThirstBlood);
@@ -63,24 +60,16 @@ public sealed class VampireThirstBloodSystem : EntitySystem
         var modifier = bloodPercent - thirstblood.NeutralBloodPercent;
         var ticksToZero = thirstblood.MaxThirstBlood / thirstblood.ThirstBloodDecay;
 
-
-        Logger.Info($"bloodPercent {bloodPercent}.");
-
-
         if (TryComp<HungerComponent>(uid, out var hunger))
         {
             var hungerDelta =  modifier * hunger.Thresholds[HungerThreshold.Overfed] / ticksToZero * thirstblood.HungerRateMultiplier;
             _hungerSystem.ModifyHunger(uid, hungerDelta, hunger);
-
-            var currentHunger = _hungerSystem.GetHunger(hunger);
-            Logger.Info($"Entity {uid}: Hunger modified by {hungerDelta}, current hunger = {currentHunger}.");
         }
 
         if (TryComp<ThirstComponent>(uid, out var thirst))
         {
             var thirstDelta = modifier * thirst.ThirstThresholds[ThirstThreshold.OverHydrated] / ticksToZero * thirstblood.ThirstRateMultiplier;
             _thirstSystem.ModifyThirst(uid, thirst, thirstDelta);
-            Logger.Info($"Entity {uid}: Thirst modified by {thirstDelta}, current hunger = {thirst.CurrentThirst}.");
         }
     }
 

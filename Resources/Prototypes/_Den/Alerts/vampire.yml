@@ -2,7 +2,7 @@
   id: ThirstBloodAlert
   icons:
   - sprite: /Textures/_Den/Interface/Alerts/vampire_thirstblood.rsi
-    state: bio16
+    state: vam9
   alertViewEntity: AlertVampireThirstBloodSpriteView
   name: alerts-vampire-thirstblood-name
   description: alerts-vampire-thirstblood-desc
