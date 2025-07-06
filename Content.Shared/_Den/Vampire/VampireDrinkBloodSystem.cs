@@ -48,7 +48,6 @@ public sealed class VampireDrinkBloodSystem : EntitySystem
         if (target == args.Performer)
             return;
 
-
         if (!HasComp<BloodstreamComponent>(target))
             return;
 
@@ -76,9 +75,6 @@ public sealed class VampireDrinkBloodSystem : EntitySystem
         if(target is null)
             return;
 
-        // if (target is null || !TryComp<BloodstreamComponent>(target, out var targedBloodstream))
-        //     return;
-
         DrinkBlood(ent, target.Value);
 
         _popup.PopupPredicted(Loc.GetString("vampire-feeding-successful-vampire", ("target", target.Value)), ent, ent, PopupType.Medium);
@@ -87,8 +83,6 @@ public sealed class VampireDrinkBloodSystem : EntitySystem
 
     public void DrinkBlood(Entity<VampireDrinkBloodComponent> ent, EntityUid target)
     {
-        if (!_gameTiming.IsFirstTimePredicted)
-            return;
 
         if (!TryComp(ent, out VampireThirstBloodComponent? thirstBlood) || !TryComp<BloodstreamComponent>(target, out var targedBloodstream))
             return;
