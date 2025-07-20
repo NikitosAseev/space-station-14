@@ -18,11 +18,6 @@
         color: Plum
         sound: "/Audio/_Den/Ambience/Antag/vampalert.ogg"
       components:
-      - type: VampireThirstBlood
-      - type: VampireDrinkBlood
-      - type: VampireGlareAbility
-#      - type: ActionGrant
-#        actions:
-#          - Action
+      - type: Vampire
       mindRoles:
       - MindRoleVampire

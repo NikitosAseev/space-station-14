@@ -1,10 +1,7 @@
-using Content.Shared._Den.Vampire.Abilities;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Audio;
-using Robust.Shared.Prototypes;
 
-namespace Content.Shared._Den.Vampire.Abilities.Components;
+namespace Content.Shared._Den.Vampire.Core.Abilities.Components;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(VampireGlareAbilitySystem))]

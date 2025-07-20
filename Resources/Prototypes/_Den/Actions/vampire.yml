@@ -1,3 +1,4 @@
+#Vampire Core
 - type: entity
   parent: BaseAction
   id: ActionVampireDrinkBlood
@@ -16,7 +17,7 @@
     range: 1.0
     interactOnMiss: false
   - type: EntityTargetAction
-    event: !type:VampireDrinkBloodAbility
+    event: !type:VampireDrinkBloodAbilityEvent
     whitelist:
       components:
       - Body
@@ -42,4 +43,56 @@
   - type: LimitedCharges
     maxCharges: 2
   - type: InstantAction
-    event: !type:VampireGlareAbility
+    event: !type:VampireGlareAbilityEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionVampireRejuvenateAbility
+  name: Rejuvenate
+  description: Removes any and all stuns. Removes 100 stamina damage.
+  components:
+  - type: Action
+    icon:
+      sprite: _Den/Interface/Actions/actions_vampire.rsi
+      state: rejuvenate
+    useDelay: 20.0
+    itemIconStyle: BigAction
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
+  - type: InstantAction
+    event: !type:VampireRejuvenateAbilityEvent
+
+#Umbrae
+- type: entity
+  parent: BaseAction
+  id: ActionUmbraeExtinguishAbility
+  name: Extinguish
+  description: Extinguishes all lights within a 10-tile radius around your location.
+  components:
+  - type: Action
+    icon:
+      sprite: _Den/Interface/Actions/actions_vampire.rsi
+      state: extinguish
+    useDelay: 5.0
+    itemIconStyle: BigAction
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
+  - type: InstantAction
+    event: !type:UmbraeExtinguishAbilityEvent
+    
+- type: entity
+  parent: BaseAction
+  id: ActionToggleUmbraeCloakOfDarknessAbility
+  name: Cloak Of Darkness
+  description: testdecs
+  components:
+  - type: Action
+    icon:
+      sprite: _Den/Interface/Actions/actions_vampire.rsi
+      state: cloak_of_darkness
+    useDelay: 2.0
+    itemIconStyle: BigAction
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
+  - type: InstantAction
+    event: !type:UmbraeCloakOfDarknessAbilityEvent

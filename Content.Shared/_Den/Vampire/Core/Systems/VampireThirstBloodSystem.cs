@@ -14,7 +14,6 @@ public sealed class VampireThirstBloodSystem : EntitySystem
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly HungerSystem _hungerSystem = default!;
     [Dependency] private readonly ThirstSystem _thirstSystem = default!;
-    [Dependency] private readonly INetManager _netMan = default!;
 
     public override void Initialize()
     {
@@ -51,6 +50,8 @@ public sealed class VampireThirstBloodSystem : EntitySystem
         ent.Comp.CurrentThirstBlood = Math.Clamp(ent.Comp.CurrentThirstBlood + value,
             ent.Comp.MinThirstBlood,
             ent.Comp.SoftCapMaximum ? Int32.MaxValue : ent.Comp.MaxThirstBlood);
+
+        Dirty(ent, ent.Comp);
     }
 
     private void UpdateHungerThirst(EntityUid uid, VampireThirstBloodComponent thirstblood)

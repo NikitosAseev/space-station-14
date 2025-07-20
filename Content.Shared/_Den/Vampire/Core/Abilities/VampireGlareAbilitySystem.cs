@@ -1,13 +1,12 @@
-using Content.Shared._Den.Vampire.Abilities.Components;
-using Content.Shared._Den.Vampire.Events;
+using Content.Shared._Den.Vampire.Core.Abilities.Components;
+using Content.Shared._Den.Vampire.Core.Events;
 using Content.Shared.Stunnable;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Popups;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 
-namespace Content.Shared._Den.Vampire.Abilities;
+namespace Content.Shared._Den.Vampire.Core.Abilities;
 
 public sealed class VampireGlareAbilitySystem : EntitySystem
 {
@@ -16,15 +15,21 @@ public sealed class VampireGlareAbilitySystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedStunSystem _stuns = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedActionsSystem _action = default!;
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<VampireGlareAbilityComponent, VampireGlareAbility>(OnGlare);
+        SubscribeLocalEvent<VampireGlareAbilityComponent, VampireGlareAbilityEvent>(OnGlare);
+        SubscribeLocalEvent<VampireGlareAbilityComponent, MapInitEvent>(OnMapInit);
     }
 
-    public void OnGlare(Entity<VampireGlareAbilityComponent> ent, ref VampireGlareAbility args)
+    private void OnMapInit(Entity<VampireGlareAbilityComponent> entity, ref MapInitEvent args)
+    {
+        _action.AddAction(entity, ref entity.Comp.Action, entity.Comp.ActionProto, entity);
+    }
+
+    public void OnGlare(Entity<VampireGlareAbilityComponent> ent, ref VampireGlareAbilityEvent args)
     {
         var (coords,facing) = _transform.GetMoverCoordinateRotation(ent, Transform(ent));
         facing = new Angle(facing.ToWorldVec());
@@ -34,10 +39,18 @@ public sealed class VampireGlareAbilitySystem : EntitySystem
         PredictedSpawnAttachedTo(ent.Comp.FlashEffectProto, coords);
 
         // todo: Make it to where when the vampire is on the ground or restrained, all sides count as a side attack.
-        GlareStun(ent, coords, facing, ent.Comp.DamageFront, true, true);
-        GlareStun(ent, coords, facing + Angle.FromDegrees(-90), ent.Comp.DamageSides, true);
-        GlareStun(ent, coords, facing + Angle.FromDegrees(90),  ent.Comp.DamageSides, true);
-        GlareStun(ent, coords, facing + Angle.FromDegrees(180), ent.Comp.DamageRear);
+        var glareDirections = new[]
+        {
+            (0, ent.Comp.DamageFront, true, true),     // Front
+            (-90, ent.Comp.DamageSides, true, false),  // Left
+            (90, ent.Comp.DamageSides, true, false),   // Right
+            (180, ent.Comp.DamageRear, false, false)   // Rear
+        };
+
+        foreach (var (angleOffset, damage, knockdown, stun) in glareDirections)
+        {
+            GlareStun(ent, coords, facing + Angle.FromDegrees(angleOffset), damage, knockdown, stun);
+        }
 
         args.Handled = true;
     }

@@ -3,12 +3,13 @@ using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared._Den.Vampire.Components;
+namespace Content.Shared._Den.Vampire.Core.Abilities.Components;
 
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-[Access(typeof(VampireDrinkBloodSystem))]
-public sealed partial class VampireDrinkBloodComponent : Component
+[Access(typeof(VampireDrinkBloodAbilitySystem))]
+
+public sealed partial class VampireDrinkBloodAbilityComponent : Component
 {
     [DataField, AutoNetworkedField]
     public TimeSpan DrinkBloodDuration = TimeSpan.FromSeconds(2);
