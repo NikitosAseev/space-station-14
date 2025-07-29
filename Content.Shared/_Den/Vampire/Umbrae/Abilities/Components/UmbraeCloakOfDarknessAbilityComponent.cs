@@ -28,8 +28,15 @@ public sealed partial class UmbraeCloakOfDarknessAbilityComponent : Component
 
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoNetworkedField, AutoPausedField]
-    public TimeSpan NextUpdate = TimeSpan.Zero;
+    public TimeSpan NextCloakOfDarknessUpdate = TimeSpan.Zero;
+
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoNetworkedField, AutoPausedField]
+    public TimeSpan NextLightUpdate = TimeSpan.Zero;
 
     [DataField, AutoNetworkedField]
-    public TimeSpan UpdateInterval = TimeSpan.FromSeconds(2);
+    public TimeSpan UpdateCloakOfDarknessInterval = TimeSpan.FromSeconds(0.2);
+
+    [DataField, AutoNetworkedField]
+    public TimeSpan UpdateLightInterval = TimeSpan.FromSeconds(0.2);
 }

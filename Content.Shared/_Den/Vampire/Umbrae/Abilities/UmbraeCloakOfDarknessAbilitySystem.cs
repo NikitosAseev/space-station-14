@@ -1,3 +1,4 @@
+using Content.Shared._Den.Light;
 using Content.Shared._Den.Vampire.Umbrae.Abilities.Components;
 using Content.Shared._Den.Vampire.Umbrae.Events;
 using Content.Shared.Actions;
@@ -26,8 +27,11 @@ public abstract class SharedUmbraeCloakOfDarknessAbilitySystem : EntitySystem
 
     private void OnMapInit(Entity<UmbraeCloakOfDarknessAbilityComponent> ent, ref MapInitEvent args)
     {
+        EnsureComp<LightDetectionComponent>(ent);
+        EnsureComp<StealthComponent>(ent, out var stealth);
+        _stealth.SetEnabled(ent, false, stealth);
+
         _action.AddAction(ent, ref ent.Comp.Action, ent.Comp.ActionProto, ent);
-        Logger.Info($"[Umbrae] Action initialized for entity {ent}");
     }
 
     private void OnCloakOfDarkness(Entity<UmbraeCloakOfDarknessAbilityComponent> ent, ref UmbraeCloakOfDarknessAbilityEvent args)
@@ -35,15 +39,13 @@ public abstract class SharedUmbraeCloakOfDarknessAbilitySystem : EntitySystem
         if (args.Handled)
             return;
 
-        EnsureComp<StealthComponent>(ent, out var stealth);
+        TryComp<StealthComponent>(ent, out var stealth);
+
+        if (stealth is null)
+            return;
 
         var newState = !stealth.Enabled;
         _stealth.SetEnabled(ent, newState, stealth);
-        Logger.Info($"[Umbrae] Cloak toggled for {ent}: stealth now {(newState ? "ENABLED" : "DISABLED")}");
-
-
-        var msg = newState ? "You fade into darkness..." : "You emerge from the shadows.";
-        _popup.PopupPredicted(Loc.GetString(msg), ent, ent);
 
         args.Handled = true;
     }
