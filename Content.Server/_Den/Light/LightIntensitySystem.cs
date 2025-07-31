@@ -1,4 +1,3 @@
-using System.Linq;
 using Robust.Shared.Physics;
 using Robust.Shared.Threading;
 using System.Numerics;
@@ -7,6 +6,7 @@ using Robust.Shared.Timing;
 using Content.Shared.Mobs.Systems;
 using Content.Shared._Den.Light;
 using Content.Shared.Physics;
+using Robust.Shared.Map;
 
 namespace Content.Server._Den.Light;
 public sealed class LightIntensitySystem : EntitySystem
@@ -18,50 +18,80 @@ public sealed class LightIntensitySystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly PhysicsSystem _physicsSystem = default!;
 
-    private readonly Dictionary<EntityUid, SourceData> _sources = new();
 
-    private record struct SourceData(EntityUid Ent, TransformComponent Xform , Vector2 WorldPosition, float Radius);
+    private readonly B2DynamicTree<EntityUid> _sourceTree = new();
+    private readonly Dictionary<EntityUid, SourceData> _sourceDataMap  = new();
+    private readonly Dictionary<EntityUid, DynamicTree.Proxy> _proxyMap = new();
+    private readonly List<Entity<LightDetectionComponent>> _detectors = new();
+    private readonly struct SourceData
+    {
+        public readonly EntityUid LighEntity;
+        public readonly MapId LightMapId;
+        public readonly Vector2 LighWorldPosition;
+        public readonly float LightRadius;
+
+        public SourceData(EntityUid lightEntity, MapId lighmapId, Vector2 lighWorldPosition, float lightRadius)
+        {
+            LighEntity = lightEntity;
+            LightMapId = lighmapId;
+            LighWorldPosition = lighWorldPosition;
+            LightRadius = lightRadius;
+        }
+    }
 
     public override void Initialize()
     {
+        base.Initialize();
         SubscribeLocalEvent<LightDetectionComponent, ComponentStartup>(OnReceiverStartup);
-
     }
 
     private void OnReceiverStartup(Entity<LightDetectionComponent> ent, ref ComponentStartup args)
     {
         ent.Comp.NextUpdate = _timing.CurTime;
+
     }
 
-
-    public void UpdateLight()
+    public void UpdateSource()
     {
-        var toRemove = new HashSet<EntityUid>(_sources.Keys);
-
         var query = EntityQueryEnumerator<PointLightComponent, TransformComponent>();
 
-        var addedCount = 0;
-        var removedCount = 0;
-
-
-        while (query.MoveNext(out var ent, out var comp, out var xform))
+        while (query.MoveNext(out var ent, out var light, out var xform))
         {
-            if (!comp.Enabled || comp.Energy <= 0f || Terminating(ent))
+            if (!light.Enabled || light.Energy <= 0f || Terminating(ent))
             {
-                _sources.Remove(ent);
+                RemoveSource(ent);
                 continue;
             }
 
             var worldPos = _transform.GetWorldPosition(xform);
-            var data = new SourceData(ent, xform , worldPos, comp.Radius);
-            _sources[ent] = data;
-            toRemove.Remove(ent);
+            var mapId = xform.MapID;
+            var radius = light.Radius;
+
+            var aabb = Box2.CenteredAround(worldPos, new Vector2(radius * 2f, radius * 2f));
+
+            if (_proxyMap.TryGetValue(ent, out var proxy) && proxy != DynamicTree.Proxy.Free)
+            {
+                _sourceTree.MoveProxy(proxy, aabb);
+            }
+            else
+            {
+                var newProxy = _sourceTree.CreateProxy(aabb, uint.MaxValue, ent);
+                _proxyMap[ent] = newProxy;
+            }
+
+            _sourceDataMap[ent] = new SourceData(ent, mapId, worldPos, radius);
+        }
+    }
+
+    private void RemoveSource(EntityUid ent)
+    {
+        if (_proxyMap.TryGetValue(ent, out var proxy) && proxy != DynamicTree.Proxy.Free)
+        {
+            _sourceTree.DestroyProxy(proxy);
+            _proxyMap.Remove(ent);
         }
 
-        foreach (var ent in toRemove)
-        {
-            _sources.Remove(ent);
-        }
+        _sourceDataMap.Remove(ent);
 
     }
 
@@ -73,87 +103,88 @@ public sealed class LightIntensitySystem : EntitySystem
             return;
 
         ent.Comp.LastKnownPosition = worldPos;
+        var mapId = _transform.GetMapId(ent.Owner);
+        var totalIntensity = 0f;
 
-        ent.Comp.IsOnLight = false;
-
-        var accumulatedIntensity = 0f;
-
-        var contributingSources = new List<(EntityUid SourceEnt, float Intensity)>();
-
-        foreach (var (_, source) in _sources)
+        foreach (var (_, source) in _sourceDataMap)
         {
-            var dist = (source.WorldPosition - worldPos).Length();
-            if (dist > source.Radius)
+            if (source.LightMapId != mapId)
                 continue;
 
-            if (dist <= 0.01f) // So the debug stops crashing
+            var offset = source.LighWorldPosition - worldPos;
+            var dist = offset.Length();
+            if (dist > source.LightRadius  || dist <= 0.01f) // dist <= 0.01f so the debug stops crashing
                 continue;
 
-            var direction = (worldPos - source.WorldPosition).Normalized();
+            var direction = offset / dist;
 
-            var ray = new CollisionRay(source.WorldPosition, direction, (int)CollisionGroup.Opaque);
+            var ray = new CollisionRay(source.LighWorldPosition, direction, (int)CollisionGroup.Opaque);
 
             var rayResults = _physicsSystem.IntersectRay(
-                source.Xform.MapID,
+                source.LightMapId,
                 ray,
                 dist,
-                source.Ent);
+                source.LighEntity);
 
-            var hasBeenBlocked = false;
+            var blocked  = false;
 
             foreach (var hit in rayResults)
             {
-                if (hit.HitEntity != source.Ent && hit.HitEntity != ent.Owner)
+                if (hit.HitEntity != source.LighEntity && hit.HitEntity != ent.Owner)
                 {
-                    hasBeenBlocked = true;
+                    blocked  = true;
                     break;
                 }
             }
 
-            if (hasBeenBlocked)
+            if (blocked)
                 continue;
 
-            var falloff  = 1f - (dist / source.Radius);
-            accumulatedIntensity += falloff;
-            contributingSources.Add((source.Ent, falloff));
+            var falloff  = 1f - (dist / source.LightRadius );
+            totalIntensity += falloff;
         }
 
+        ent.Comp.CurrentIntensity = totalIntensity;
+        ent.Comp.IsOnLight = totalIntensity > 0f;
+    }
 
-        if (accumulatedIntensity > 0f)
+    private readonly record struct LightDetectionJob : IParallelRobustJob
+    {
+        public int BatchSize => 4;
+        public required LightIntensitySystem System { get; init; }
+        public required List<Entity<LightDetectionComponent>> Detectors { get; init; }
+
+        public void Execute(int index)
         {
-            ent.Comp.IsOnLight = true;
-            ent.Comp.CurrentIntensity = accumulatedIntensity;
+            var ent = Detectors[index];
+            System.DetectLight(ent);
         }
-        else
-        {
-            ent.Comp.IsOnLight = false;
-            ent.Comp.CurrentIntensity = 0f;
-        }
-
-        var time = _timing.CurTime;
-        var sourceDetails = string.Join(", ", contributingSources.Select(cs => $"[{cs.SourceEnt}: {cs.Intensity:F2}]"));
-        Logger.Info($"[{time}] Entity {ent.Owner} - CurrentIntensity: {ent.Comp.CurrentIntensity:F3}, IsOnLight: {ent.Comp.IsOnLight}, SourcesCount: {contributingSources.Count}, Sources: {sourceDetails}");
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        UpdateLight();
+        UpdateSource();
+
+        _detectors.Clear();
 
         var query = EntityQueryEnumerator<LightDetectionComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
-            if (_mobStateSystem.IsDead(uid))
-                continue;
-
-            if (_timing.CurTime < comp.NextUpdate)
+            if (_mobStateSystem.IsDead(uid) || _timing.CurTime < comp.NextUpdate)
                 continue;
 
             comp.NextUpdate = _timing.CurTime + comp.UpdateInterval;
-            DetectLight((uid, comp));
+            _detectors.Add((uid, comp));
         }
 
-    }
+        var job = new LightDetectionJob
+        {
+            System = this,
+            Detectors = _detectors
+        };
 
+        _parallel.ProcessNow(job, _detectors.Count);
+    }
 }

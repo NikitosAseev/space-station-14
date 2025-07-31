@@ -1,11 +1,12 @@
 using System.Numerics;
+using Robust.Shared.Physics;
 
 namespace Content.Shared._Den.Light;
 
 /// <summary>
 /// </summary>
 [RegisterComponent]
-public sealed partial class LightDetectionComponent  : Component
+public sealed partial class LightDetectionComponent : Component
 {
     /// <summary>
     ///  Is user standing on a lighted area?

@@ -26,6 +26,9 @@ public sealed partial class UmbraeCloakOfDarknessAbilityComponent : Component
     [DataField, AutoNetworkedField]
     public float Range = 10f;
 
+    [DataField, AutoNetworkedField]
+    public float Smoothing = 0.1f;
+
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoNetworkedField, AutoPausedField]
     public TimeSpan NextCloakOfDarknessUpdate = TimeSpan.Zero;
