@@ -1,0 +1,128 @@
+#Vampire Core
+- type: entity
+  parent: BaseAction
+  id: ActionVampireDrinkBlood
+  name: Feed
+  description: Drink blood from a creature.
+  components:
+  - type: Action
+    icon:
+      sprite: _Den/Interface/Actions/actions_vampire.rsi
+      state: vampire_drinkblood
+    useDelay: 2.0
+    itemIconStyle: BigAction
+  - type: TargetAction
+    repeat: false
+    deselectOnMiss: true
+    range: 1.0
+    interactOnMiss: false
+  - type: EntityTargetAction
+    event: !type:VampireDrinkBloodAbilityEvent
+    whitelist:
+      components:
+      - Body
+    canTargetSelf: false
+
+- type: entity
+  parent: BaseAction
+  id: ActionVampireGlareAbility
+  name: Glare
+  description: Instill fear and despair in those around you, weakening their resolve, stunning and silencing them.
+  components:
+  - type: Action
+    checkCanInteract: false
+    icon:
+      sprite: _Den/Interface/Actions/actions_vampire.rsi
+      state: glare
+    useDelay: 1.0
+    itemIconStyle: BigAction
+    sound: !type:SoundPathSpecifier
+      path: /Audio/_Den/Effects/blind.ogg
+  - type: AutoRecharge
+    rechargeDuration: 20
+  - type: LimitedCharges
+    maxCharges: 2
+  - type: InstantAction
+    event: !type:VampireGlareAbilityEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionVampireRejuvenateAbility
+  name: Rejuvenate
+  description: Removes any and all stuns. Removes 100 stamina damage.
+  components:
+  - type: Action
+    icon:
+      sprite: _Den/Interface/Actions/actions_vampire.rsi
+      state: rejuvenate
+    useDelay: 20.0
+    itemIconStyle: BigAction
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
+  - type: InstantAction
+    event: !type:VampireRejuvenateAbilityEvent
+
+#Umbrae
+- type: entity
+  parent: BaseAction
+  id: ActionUmbraeExtinguishAbility
+  name: Extinguish
+  description: Extinguishes all lights within a 10-tile radius around your location.
+  components:
+  - type: Action
+    icon:
+      sprite: _Den/Interface/Actions/actions_vampire.rsi
+      state: extinguish
+    useDelay: 5.0
+    itemIconStyle: BigAction
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
+  - type: InstantAction
+    event: !type:UmbraeExtinguishAbilityEvent
+    
+- type: entity
+  parent: BaseAction
+  id: ActionToggleUmbraeCloakOfDarknessAbility
+  name: Cloak Of Darkness
+  description: testdecs
+  components:
+  - type: Action
+    icon:
+      sprite: _Den/Interface/Actions/actions_vampire.rsi
+      state: cloak_of_darkness
+    useDelay: 2.0
+    itemIconStyle: BigAction
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
+  - type: InstantAction
+    event: !type:UmbraeCloakOfDarknessAbilityEvent
+
+- type: entity
+  parent: ActionBlink
+  id: ActionDarkPassageAbility
+  name: Dark Passage
+  description: testdecs
+  components:
+  - type: Action
+    icon:
+      sprite: _Den/Interface/Actions/actions_vampire.rsi
+      state: dark_passage
+    useDelay: 2.0
+    itemIconStyle: BigAction
+    
+- type: entity
+  parent: BaseAction
+  id: ActionUmbraeSoulAnchorAbility
+  name: Soul Anchor
+  description: testdecs
+  components:
+  - type: Action
+    icon:
+      sprite: _Den/Interface/Actions/actions_vampire.rsi
+      state: soul_anchor
+    useDelay: 1.0
+    itemIconStyle: BigAction
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
+  - type: InstantAction
+    event: !type:UmbraeSoulAnchorAbilityEvent

@@ -1,0 +1,20 @@
+- type: entity
+  parent: BaseStructure
+  id: SoulAnchor
+  name: Soul Anchor
+  description: Soul Anchor
+  components:
+  - type: Sprite
+    sprite: _Den/Structures/pylon.rsi
+    state: pylon
+  - type: Fixtures
+    fixtures:
+      portalFixture:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.48,0.25,0.48"
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+        hard: false

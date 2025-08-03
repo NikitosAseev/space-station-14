@@ -1,0 +1,12 @@
+- type: entity
+  id: StorePresetVampire
+  abstract: true
+  components:
+  - type: Store
+    name: store-preset-name-vampire
+    categories:
+    - categoriesname
+    currencyWhitelist:
+    - BloodEssence
+    balance:
+      BloodEssence: 0
