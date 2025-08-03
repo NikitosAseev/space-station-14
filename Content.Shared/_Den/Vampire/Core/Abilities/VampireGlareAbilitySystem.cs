@@ -1,9 +1,9 @@
 using Content.Shared._Den.Vampire.Core.Abilities.Components;
 using Content.Shared._Den.Vampire.Core.Events;
-using Content.Shared.Stunnable;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Popups;
+using Content.Shared.Stunnable;
 using Robust.Shared.Map;
 
 namespace Content.Shared._Den.Vampire.Core.Abilities;
@@ -13,7 +13,7 @@ public sealed class VampireGlareAbilitySystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedStaminaSystem  _stamina = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedStunSystem _stuns = default!;
+    [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedActionsSystem _action = default!;
     public override void Initialize()
@@ -68,9 +68,10 @@ public sealed class VampireGlareAbilitySystem : EntitySystem
             if (target == user.Owner)
                 continue;
             if (knockdown)
-                _stuns.TryKnockdown(target, user.Comp.KnockdownTime, false);
+                _stun.TryKnockdown(target, user.Comp.KnockdownTime, false);
             if (stun)
-                _stuns.TryStun(target, user.Comp.StunTime, false);
+                _stun.TryUpdateStunDuration(target, user.Comp.StunTime);
+
             _stamina.TakeStaminaDamage(target, damage);
         }
     }

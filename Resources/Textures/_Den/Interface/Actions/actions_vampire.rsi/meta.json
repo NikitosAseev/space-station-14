@@ -1,7 +1,7 @@
 ﻿{
   "version": 1,
   "license": "CC-BY-SA-3.0",
-    "copyright": "Source: https://github.com/ParadiseSS13/Paradise/blob/a519ea6778122859a35de6f545c87bb6a7e24a70/icons/mob/actions/actions.dmi, fangs by Southbridge",
+    "copyright": "Source: https://github.com/ParadiseSS13/Paradise/blob/a519ea6778122859a35de6f545c87bb6a7e24a70/icons/mob/actions/actions.dmi, vampire_drinkblood by Aurorablade.",
     "size": {
         "x": 32,
         "y": 32
@@ -110,7 +110,7 @@
             "name": "vampiric_claws"
         },
         {
-            "name": "fangs"
+            "name": "vampire_drinkblood"
         }
     ]
 }
